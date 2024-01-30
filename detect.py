@@ -5,10 +5,11 @@ import PIL.Image
 from PIL import ImageDraw
 import torchvision.transforms as transforms
 
-def detect(weigths,source,output):
+def detect(weights,source,output):
   model = torchvision.models.resnet18(pretrained=False)
   model.fc = torch.nn.Linear(512,2)
-  model.load_state_dict(torch.load(weigths))
+  model.load_state_dict(torch.load(weights))
+  model.eval()
   device = torch.device('cpu')
   model = model.to(device)
   image_raw = PIL.Image.open(source)
@@ -25,7 +26,7 @@ def detect(weigths,source,output):
   pred = model(image)
   pred = torch.squeeze(pred)
 
-  x = int((pred[0] * 112 + 112) * 960.0 / 224.0)
+  x = int((pred[0] * 112 + 112) * 640.0 / 224.0)
   y = int(224 - (pred[1] * 112 + 112))
   print(x,y)
   # imagedraw.point((100,100),)
