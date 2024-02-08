@@ -107,7 +107,7 @@ def main(args):
   model = model.to(device)
 
   NUM_EPOCHS = args.epochs
-  BEST_MODEL_PATH = args.outdir + '/best.pth'
+  BEST_MODEL_PATH = args.outdir + '/best.pt'
   best_loss = 1e9
 
   optimizer = optim.Adam(model.parameters())
